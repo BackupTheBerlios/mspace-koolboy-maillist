@@ -1,0 +1,125 @@
+From rubio.g at gmail.com  Tue May  3 13:34:30 2005
+From: rubio.g at gmail.com (Sergio Rubio)
+Date: Tue, 3 May 2005 13:34:30 +0200
+Subject: [Mspace-koolboy] testing the mailing list
+Message-ID: <200505031334.30887.sergio.rubio@hispalinux.es>
+
+
+
+From rubio.g at gmail.com  Tue May  3 22:22:03 2005
+From: rubio.g at gmail.com (Sergio Rubio)
+Date: Tue, 3 May 2005 22:22:03 +0200
+Subject: [Mspace-koolboy] libkoolboy design
+Message-ID: <200505032222.04041.sergio.rubio@hispalinux.es>
+
+Ok, dude, he estado mirando un poco el code por encima y antes de cambiar nada 
+quiero comentarte la jugada a ver si te mola:
+
+XmlNote:
+--------------
+* Debe forzar a que el t?tulo de la nota sea correcto, tal y como quedamos.
+Es decir, en el constructor debe comprobar que el t?tulo es de la forma
+"UnaNotaAleatoria" y si no lanzar una exception.
+* Debe notificar de cambios en su estado emitiendo signals o whatever. Tal vez 
+deber?a tener un flag que indicase si la nota ha cambiado, algo como 
+XmlNote.dirty?
+* Necesitamos un XmlNote.rawText o algo asin que me devuelva todo lo que hay 
+dentro de <text></text> con etiquetas incluidas. Esto ser? lo que ir? a parar 
+directamente al TextEdit.
+Un XmlNote.text que devuelva solo el texto sin las tags podr?a ser conveniente 
+tb.
+
+NoteManager:
+-------------------
+* Debe estar atento al cambio del estado de las notas y serializar la nota 
+cuando cambia su contenido. El deber?a de ser el responsable de serializarla 
+al fichero o a donde sea.
+* Tenemos que incluir metodos utilidad como search, lastModified, etc.
+* Es posible que la interfaz de dcop sea mejor definirla aqui y dar acceso a 
+las operaciones de NoteManager a traves de dcop.
+
+NoteView:
+--------------
+* En principio la clase es bastante opaca. Solo muetra un constructor al que 
+se le pasa la nota construida y da tb acceso de lectura (attr_reader :note) a 
+la nota que contiene. El resto de las operaciones de NoteView son internas y 
+transparentes al resto de los componentes de la aplicacion. NoteView es capaz 
+de modificar el modelo/nota y NoteManager sera el encargado de 
+serializarla/whatever cuando la nota cambie gracias a las signals que emitira 
+la nota.
+
+Systray
+-------------
+* Supongo que podr?a manejar el estado de visibilidad de las ventanas. Que 
+notas hay abiertas y cuales no.
+
+Si te molan las ideas pues yo creo que con esto podemos ir tirando. Seguro que 
+me dejo tons of stuff pero ya ir?n saliendo.
+
+Salud dude!
+
+
+From rubio.g at gmail.com  Wed May  4 15:51:32 2005
+From: rubio.g at gmail.com (Sergio Rubio)
+Date: Wed, 4 May 2005 15:51:32 +0200
+Subject: [Mspace-koolboy] Fwd: libkoolboy design
+Message-ID: <200505041551.33154.sergio.rubio@hispalinux.es>
+
+Woops! no est?bamos suscritos asi que esto no ha llegado.
+
+----------  Forwarded Message  ----------
+
+Subject: libkoolboy design
+Date: Tuesday 03 May 2005 10:22 pm
+From: Sergio Rubio <sergio.rubio at hispalinux.es>
+To: mspace-koolboy at lists.berlios.de
+
+Ok, dude, he estado mirando un poco el code por encima y antes de cambiar
+ nada quiero comentarte la jugada a ver si te mola:
+
+XmlNote:
+--------------
+* Debe forzar a que el t?tulo de la nota sea correcto, tal y como quedamos.
+Es decir, en el constructor debe comprobar que el t?tulo es de la forma
+"UnaNotaAleatoria" y si no lanzar una exception.
+* Debe notificar de cambios en su estado emitiendo signals o whatever. Tal
+ vez deber?a tener un flag que indicase si la nota ha cambiado, algo como
+ XmlNote.dirty?
+* Necesitamos un XmlNote.rawText o algo asin que me devuelva todo lo que hay
+dentro de <text></text> con etiquetas incluidas. Esto ser? lo que ir? a parar
+directamente al TextEdit.
+Un XmlNote.text que devuelva solo el texto sin las tags podr?a ser
+ conveniente tb.
+
+NoteManager:
+-------------------
+* Debe estar atento al cambio del estado de las notas y serializar la nota
+cuando cambia su contenido. El deber?a de ser el responsable de serializarla
+al fichero o a donde sea.
+* Tenemos que incluir metodos utilidad como search, lastModified, etc.
+* Es posible que la interfaz de dcop sea mejor definirla aqui y dar acceso a
+las operaciones de NoteManager a traves de dcop.
+
+NoteView:
+--------------
+* En principio la clase es bastante opaca. Solo muetra un constructor al que
+se le pasa la nota construida y da tb acceso de lectura (attr_reader :note) a
+la nota que contiene. El resto de las operaciones de NoteView son internas y
+transparentes al resto de los componentes de la aplicacion. NoteView es capaz
+de modificar el modelo/nota y NoteManager sera el encargado de
+serializarla/whatever cuando la nota cambie gracias a las signals que emitira
+la nota.
+
+Systray
+-------------
+* Supongo que podr?a manejar el estado de visibilidad de las ventanas. Que
+notas hay abiertas y cuales no.
+
+Si te molan las ideas pues yo creo que con esto podemos ir tirando. Seguro
+ que me dejo tons of stuff pero ya ir?n saliendo.
+
+Salud dude!
+
+-------------------------------------------------------
+
+

@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Mspace-koolboy] libkoolboy design
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/mspace-koolboy/2005-May/index.html" >
+   <LINK REL="made" HREF="mailto:mspace-koolboy%40lists.berlios.de?Subject=Re%3A%20%5BMspace-koolboy%5D%20libkoolboy%20design&In-Reply-To=%3C200505032222.04041.sergio.rubio%40hispalinux.es%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000000.html">
+   <LINK REL="Next"  HREF="000002.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Mspace-koolboy] libkoolboy design</H1>
+    <B>Sergio Rubio</B> 
+    <A HREF="mailto:mspace-koolboy%40lists.berlios.de?Subject=Re%3A%20%5BMspace-koolboy%5D%20libkoolboy%20design&In-Reply-To=%3C200505032222.04041.sergio.rubio%40hispalinux.es%3E"
+       TITLE="[Mspace-koolboy] libkoolboy design">rubio.g at gmail.com
+       </A><BR>
+    <I>Tue May  3 22:22:03 CEST 2005</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000000.html">[Mspace-koolboy] testing the mailing list
+</A></li>
+        <LI>Next message: <A HREF="000002.html">[Mspace-koolboy] Fwd: libkoolboy design
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1">[ date ]</a>
+              <a href="thread.html#1">[ thread ]</a>
+              <a href="subject.html#1">[ subject ]</a>
+              <a href="author.html#1">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Ok, dude, he estado mirando un poco el code por encima y antes de cambiar nada 
+quiero comentarte la jugada a ver si te mola:
+
+XmlNote:
+--------------
+* Debe forzar a que el t&#237;tulo de la nota sea correcto, tal y como quedamos.
+Es decir, en el constructor debe comprobar que el t&#237;tulo es de la forma
+&quot;UnaNotaAleatoria&quot; y si no lanzar una exception.
+* Debe notificar de cambios en su estado emitiendo signals o whatever. Tal vez 
+deber&#237;a tener un flag que indicase si la nota ha cambiado, algo como 
+XmlNote.dirty?
+* Necesitamos un XmlNote.rawText o algo asin que me devuelva todo lo que hay 
+dentro de &lt;text&gt;&lt;/text&gt; con etiquetas incluidas. Esto ser&#225; lo que ir&#225; a parar 
+directamente al TextEdit.
+Un XmlNote.text que devuelva solo el texto sin las tags podr&#237;a ser conveniente 
+tb.
+
+NoteManager:
+-------------------
+* Debe estar atento al cambio del estado de las notas y serializar la nota 
+cuando cambia su contenido. El deber&#237;a de ser el responsable de serializarla 
+al fichero o a donde sea.
+* Tenemos que incluir metodos utilidad como search, lastModified, etc.
+* Es posible que la interfaz de dcop sea mejor definirla aqui y dar acceso a 
+las operaciones de NoteManager a traves de dcop.
+
+NoteView:
+--------------
+* En principio la clase es bastante opaca. Solo muetra un constructor al que 
+se le pasa la nota construida y da tb acceso de lectura (attr_reader :note) a 
+la nota que contiene. El resto de las operaciones de NoteView son internas y 
+transparentes al resto de los componentes de la aplicacion. NoteView es capaz 
+de modificar el modelo/nota y NoteManager sera el encargado de 
+serializarla/whatever cuando la nota cambie gracias a las signals que emitira 
+la nota.
+
+Systray
+-------------
+* Supongo que podr&#237;a manejar el estado de visibilidad de las ventanas. Que 
+notas hay abiertas y cuales no.
+
+Si te molan las ideas pues yo creo que con esto podemos ir tirando. Seguro que 
+me dejo tons of stuff pero ya ir&#225;n saliendo.
+
+Salud dude!
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000000.html">[Mspace-koolboy] testing the mailing list
+</A></li>
+	<LI>Next message: <A HREF="000002.html">[Mspace-koolboy] Fwd: libkoolboy design
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#1">[ date ]</a>
+              <a href="thread.html#1">[ thread ]</a>
+              <a href="subject.html#1">[ subject ]</a>
+              <a href="author.html#1">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/mspace-koolboy">More information about the Mspace-koolboy
+mailing list</a><br>
+</body></html>
